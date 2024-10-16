@@ -1,0 +1,50 @@
+import datetime
+
+class AttendanceManager:
+    def __init__(self):
+        self.students = {}
+
+    def add_student(self, name):
+        if name not in self.students:
+            self.students[name] = Student(name)
+            print(f"Student '{name}' added successfully.")
+        else:
+            print(f"Student '{name}' already exists.")
+
+    def mark_student_attendance(self, name, date_time, status):
+        if name in self.students:
+            self.students[name].mark_attendance(date_time, status)
+            print(f"Attendance marked for student '{name}' at {date_time}.")
+        else:
+            print(f"Student '{name}' not found.")
+
+    def get_student_attendance_percentage(self, name):
+        if name in self.students:
+            attendance_percentage = self.students[name].calculate_attendance_percentage()
+            print(f"Attendance percentage for student '{name}': {attendance_percentage:.2f}%")
+        else:
+            print(f"Student '{name}' not found.")
+
+if __name__ == "__main__":
+    manager = AttendanceManager()
+
+    while True:
+        print("\n1. Add Student\n2. Mark Attendance\n3. Get Attendance Percentage\n4. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            name = input("Enter student name: ")
+            manager.add_student(name)
+        elif choice == "2":
+            name = input("Enter student name: ")
+            date_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            status = input("Enter attendance status (Present/Absent): ").capitalize()
+            manager.mark_student_attendance(name, date_time, status)
+        elif choice == "3":
+            name = input("Enter student name: ")
+            manager.get_student_attendance_percentage(name)
+        elif choice == "4":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
